@@ -1,69 +1,63 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { X, Upload, File, FileText } from 'lucide-react';
+import React, { useRef, useState } from 'react';
 
 interface Note {
   id: string;
   title: string;
   content: string;
-  type: 'text' | 'file';
+  type: 'file' | 'text';
   fileUrl?: string;
   fileName?: string;
   timestamp: string;
 }
+import { X, Upload, File, FileText, Edit3, Save } from 'lucide-react';
+import { useNotes } from '../contexts/NotesContext';
 
 export function NotesManager() {
-  const [notes, setNotes] = useState<Note[]>(() => {
-    const savedNotes = localStorage.getItem('productivityNotesManager');
-    return savedNotes ? JSON.parse(savedNotes) : [];
-  });
+  const { notes, addNote, deleteNote, updateNote } = useNotes();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [editNoteId, setEditNoteId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editContent, setEditContent] = useState('');
+  const [fileContent, setFileContent] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    localStorage.setItem('productivityNotesManager', JSON.stringify(notes));
-  }, [notes]);
-
-  const addTextNote = () => {
-    if (title.trim() && content.trim()) {
-      const newNote = {
+  const addNoteWithFile = () => {
+    if (title.trim() && (content.trim() || file)) {
+      const newNote: Note = {
         id: Date.now().toString(),
         title: title.trim(),
         content: content.trim(),
-        type: 'text' as const,
+        type: file ? 'file' : 'text' as const,
+        fileUrl: file ? URL.createObjectURL(file) : undefined,
+        fileName: file ? file.name : undefined,
         timestamp: new Date().toLocaleString()
       };
-      setNotes([newNote, ...notes]);
+      addNote(newNote);
       setTitle('');
       setContent('');
+      setFile(null);
+      setFileContent('');
     }
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // Create a blob URL for the file
-      const fileUrl = URL.createObjectURL(file);
-      const newNote = {
-        id: Date.now().toString(),
-        title: file.name,
-        content: `File size: ${(file.size / 1024).toFixed(2)} KB`,
-        type: 'file' as const,
-        fileUrl,
-        fileName: file.name,
-        timestamp: new Date().toLocaleString()
-      };
-      setNotes([newNote, ...notes]);
+    const uploadedFile = event.target.files?.[0];
+    if (uploadedFile) {
+      setFile(uploadedFile);
     }
   };
 
-  const deleteNote = (id: string) => {
-    setNotes(notes.filter(note => {
-      if (note.type === 'file' && note.fileUrl) {
-        URL.revokeObjectURL(note.fileUrl);
-      }
-      return note.id !== id;
-    }));
+  const startEditing = (note: any) => {
+    setEditNoteId(note.id);
+    setEditTitle(note.title || '');
+    setEditContent(note.content);
+  };
+
+  const saveEdit = (id: string) => {
+    updateNote(id, { title: editTitle, content: editContent });
+    setEditNoteId(null);
   };
 
   return (
@@ -86,7 +80,7 @@ export function NotesManager() {
         />
         <div className="flex gap-3">
           <button
-            onClick={addTextNote}
+            onClick={addNoteWithFile}
             className="flex-1 px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
           >
             Add Note
@@ -105,6 +99,11 @@ export function NotesManager() {
             className="hidden"
           />
         </div>
+        {file && (
+          <div className="mt-3 p-2 bg-gray-600 rounded-md">
+            <p className="text-white">{file.name}</p>
+          </div>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-4">
@@ -120,30 +119,61 @@ export function NotesManager() {
               <X size={16} />
             </button>
             
-            <div className="flex items-center gap-2 mb-2">
-              {note.type === 'file' ? (
-                <File size={20} className="text-blue-400" />
-              ) : (
-                <FileText size={20} className="text-green-400" />
-              )}
-              <h3 className="text-lg font-semibold">{note.title}</h3>
-            </div>
-            
-            {note.type === 'file' ? (
-              <div className="mb-2">
-                <a
-                  href={note.fileUrl}
-                  download={note.fileName}
-                  className="text-blue-400 hover:text-blue-300 underline"
+            {editNoteId === note.id ? (
+              <>
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  className="w-full mb-2 p-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <textarea
+                  value={editContent}
+                  onChange={(e) => setEditContent(e.target.value)}
+                  className="w-full h-24 p-2 bg-gray-600 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  onClick={() => saveEdit(note.id)}
+                  className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full"
                 >
-                  Download {note.fileName}
-                </a>
-              </div>
+                  <Save size={16} />
+                  Save
+                </button>
+              </>
             ) : (
-              <p className="text-gray-300 mb-2">{note.content}</p>
+              <>
+                <div className="flex items-center gap-2 mb-2">
+                  {note.type === 'file' ? (
+                    <File size={20} className="text-blue-400" />
+                  ) : (
+                    <FileText size={20} className="text-green-400" />
+                  )}
+                  <h3 className="text-lg font-semibold">{note.title}</h3>
+                </div>
+                
+                {note.type === 'file' ? (
+                  <div className="mb-2">
+                    <a
+                      href={note.fileUrl}
+                      download={note.fileName}
+                      className="text-blue-400 hover:text-blue-300 underline"
+                    >
+                      Download {note.fileName}
+                    </a>
+                  </div>
+                ) : (
+                  <p className="text-gray-300 mb-2">{note.content}</p>
+                )}
+                
+                <p className="text-gray-400 text-sm">{note.timestamp}</p>
+                <button
+                  onClick={() => startEditing(note)}
+                  className="absolute bottom-2 right-2 text-gray-400 hover:text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <Edit3 size={16} />
+                </button>
+              </>
             )}
-            
-            <p className="text-gray-400 text-sm">{note.timestamp}</p>
           </div>
         ))}
       </div>

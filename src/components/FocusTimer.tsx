@@ -8,7 +8,7 @@ const FocusTimer: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
 
     if (isActive) {
       interval = setInterval(() => {

@@ -1,38 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Notebook, X } from 'lucide-react';
-
-interface Note {
-  id: string;
-  content: string;
-  timestamp: string;
-}
+import { useNotes } from '../contexts/NotesContext';
 
 export function Notes() {
+  const { notes, addNote, deleteNote } = useNotes();
   const [isOpen, setIsOpen] = useState(false);
-  const [notes, setNotes] = useState<Note[]>(() => {
-    const savedNotes = localStorage.getItem('productivityNotes');
-    return savedNotes ? JSON.parse(savedNotes) : [];
-  });
   const [currentNote, setCurrentNote] = useState('');
 
-  useEffect(() => {
-    localStorage.setItem('productivityNotes', JSON.stringify(notes));
-  }, [notes]);
-
-  const addNote = () => {
+  const addQuickNote = () => {
     if (currentNote.trim()) {
-      const newNote = {
+      const newNote = { 
         id: Date.now().toString(),
         content: currentNote,
+        type: 'text' as const,
         timestamp: new Date().toLocaleString()
       };
-      setNotes([newNote, ...notes]);
+      addNote(newNote);
       setCurrentNote('');
     }
-  };
-
-  const deleteNote = (id: string) => {
-    setNotes(notes.filter(note => note.id !== id));
   };
 
   return (
@@ -58,7 +43,7 @@ export function Notes() {
                 className="w-full h-24 p-2 bg-gray-700 text-white rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
-                onClick={addNote}
+                onClick={addQuickNote}
                 className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full"
               >
                 Add Note

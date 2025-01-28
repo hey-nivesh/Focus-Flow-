@@ -10,6 +10,8 @@ import {
   Target,
   Timer,
   List,
+  Menu,
+  Home,
 } from 'lucide-react';
 import TaskManager from './components/TaskManager';
 import FocusTimer from './components/FocusTimer';
@@ -23,6 +25,7 @@ import { Notes } from './components/Notes';
 import { NotesManager } from './components/NotesManager';
 import { TaskProvider } from './contexts/TaskContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { NotesProvider } from './contexts/NotesContext';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -30,14 +33,15 @@ function AppContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'tasks' | 'schedule' | 'analytics' | 'notes'>('tasks');
   const [authModal, setAuthModal] = useState<'login' | 'signup' | null>(null);
-  
-  
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.documentElement.classList.toggle('dark');
-  
-  
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
   };
 
   if (!isAuthenticated) {
@@ -58,11 +62,20 @@ function AppContent() {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      {/* Toggle Button */}
+      <button
+        onClick={toggleSidebar}
+        className="fixed top-8 left-4 z-50 p-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
+      >
+        <Menu className="w-6 h-6 text-white" />
+      </button>
+
       {/* Sidebar */}
-      <div className="fixed h-full w-20 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col items-center py-8 space-y-8">
-        <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-          <Target className="w-8 h-8 text-white" />
-        </div>
+      <div 
+        className={`fixed h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col items-center pt-24 pb-8 space-y-8 transition-all duration-300 ease-in-out w-16 ${
+          !isSidebarVisible ? '-translate-x-full' : 'translate-x-0'
+        }`}
+      >
         <nav className="flex flex-col space-y-6">
           <button
             onClick={() => setActiveView('tasks')}
@@ -72,7 +85,7 @@ function AppContent() {
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
           >
-            <List className={`w-6 h-6 ${
+            <Home className={`w-6 h-6 ${
               activeView === 'tasks'
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-600 dark:text-gray-400'
@@ -136,10 +149,10 @@ function AppContent() {
       </div>
 
       {/* Main Content */}
-      <div className="ml-20 p-8">
+      <div className={`transition-all duration-300 ${isSidebarVisible ? 'ml-16' : 'ml-0'} p-8`}>
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
-            <h1 className="text-3xl font-bold text-white dark:text-white mb-4">Keep Focus</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Keep Focus</h1>
             <SearchBar onSearch={setSearchQuery} />
           </header>
 
@@ -171,7 +184,9 @@ function App() {
   return (
     <AuthProvider>
       <TaskProvider>
-        <AppContent />
+        <NotesProvider>
+          <AppContent />
+        </NotesProvider>
       </TaskProvider>
     </AuthProvider>
   );
