@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import SearchResults from './SearchResults';
+import { fetchYoutubeResults } from '../utils/youtubeApi';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -8,10 +9,17 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
 
-  const handleSearch = (value: string) => {
+  const handleSearch = async (value: string) => {
     setQuery(value);
     onSearch(value);
+    if (value.trim()) {
+      const youtubeResults = await fetchYoutubeResults(value);
+      setResults(youtubeResults);
+    } else {
+      setResults([]);
+    }
   };
 
   return (
@@ -29,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         value={query}
         onChange={(e) => handleSearch(e.target.value)}
       />
-      <SearchResults query={query} />
+      <SearchResults query={query} results={results} />
     </div>
   );
 };
