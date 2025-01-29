@@ -26,6 +26,7 @@ import { NotesManager } from './components/NotesManager';
 import { TaskProvider } from './contexts/TaskContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
+import ChatBot from './components/ChatBot';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -164,6 +165,7 @@ function AppContent() {
               </div>
               <div className="space-y-8">
                 <FocusTimer />
+                <ChatBot />
               </div>
             </div>
           )}
