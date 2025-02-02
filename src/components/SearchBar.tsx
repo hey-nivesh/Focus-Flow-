@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import SearchResults from './SearchResults';
 import { fetchYoutubeResults } from '../utils/youtubeApi';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
+  isLoggedIn: boolean;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoggedIn }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setAnimate(true);
+    }
+  }, [isLoggedIn]);
 
   const handleSearch = async (value: string) => {
     setQuery(value);
@@ -23,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className="relative">
+    <div className={`relative ${animate ? 'search-bar-animate' : ''}`}>
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <Search className="h-5 w-5 text-gray-400" />
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {
   Search,
   Clock,
@@ -27,6 +28,7 @@ import { TaskProvider } from './contexts/TaskContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
 import ChatBot from './components/ChatBot';
+import YouTubeVideoScene from './components/YouTubeVideoScene';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -154,7 +156,7 @@ function AppContent() {
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Keep Focus</h1>
-            <SearchBar onSearch={setSearchQuery} />
+            <SearchBar onSearch={setSearchQuery} isLoggedIn={isAuthenticated} />
           </header>
 
           {activeView === 'tasks' && (
@@ -187,7 +189,12 @@ function App() {
     <AuthProvider>
       <TaskProvider>
         <NotesProvider>
-          <AppContent />
+        <Router>
+            <Routes> {/* ✅ Replaced Switch with Routes */}
+              <Route path="/video/:videoId" element={<YouTubeVideoScene />} /> {/* ✅ Use 'element' prop */}
+              <Route path="/" element={<AppContent />} /> {/* ✅ Use 'element' prop */}
+            </Routes>
+          </Router>
         </NotesProvider>
       </TaskProvider>
     </AuthProvider>

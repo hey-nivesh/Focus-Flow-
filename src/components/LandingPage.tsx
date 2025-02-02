@@ -15,7 +15,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, onSignupClick }
           <div className="flex items-center space-x-3">
             <Target className="w-8 h-8 text-blue-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              FocusFlow
+              Focus Flow
             </span>
           </div>
           <div className="flex items-center space-x-4">
