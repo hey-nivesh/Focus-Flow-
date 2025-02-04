@@ -1,5 +1,6 @@
 import React from 'react';
 import { Target } from 'lucide-react';
+import '../style/LandingPage.css';
 
 interface LandingPageProps {
   onLoginClick: () => void;
@@ -14,20 +15,20 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, onSignupClick }
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Target className="w-8 h-8 text-blue-500" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-2xl hoverani font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
               Focus Flow
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <button
               onClick={onLoginClick}
-              className="px-6 py-2 rounded-lg text-gray-300 hover:text-white transition-colors duration-200"
+              className="px-6 py-2 hoverani rounded-lg text-gray-300 hover:text-white transition-colors duration-200"
             >
               Login
             </button>
             <button
               onClick={onSignupClick}
-              className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
+              className="px-6 py-2 hoverani rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
             >
               Signup
             </button>
@@ -39,15 +40,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, onSignupClick }
       <div className="container mx-auto px-6 py-20">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2">
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight mb-8">
+            <h1 className="text-5xl hoverani lg:text-6xl font-bold leading-tight mb-8">
               Your Gateway to a Distraction-Free Life
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
+            <p className="text-xl hoverani text-gray-400 mb-8">
               Master your time, boost productivity, and achieve your goals with our comprehensive task management and focus tools.
             </p>
             <button
               onClick={onSignupClick}
-              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 rounded-lg text-lg font-semibold transition-colors duration-200"
+              className="px-8 py-4 hoverani bg-blue-500 hover:bg-blue-600 rounded-lg text-lg font-semibold transition-colors duration-200"
             >
               Get Started
             </button>
@@ -58,7 +59,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLoginClick, onSignupClick }
               <img
                 src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=800"
                 alt="Productivity"
-                className="relative z-10 rounded-lg shadow-2xl"
+                className="relative hoverani z-10 rounded-lg shadow-2xl"
               />
             </div>
           </div>

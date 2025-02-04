@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react';
+import { X, Upload, File, FileText, Edit3, Save } from 'lucide-react';
+import { useNotes } from '../contexts/NotesContext';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 
-interface Note {
+interface Note{
   id: string;
   title: string;
   content: string;
@@ -9,8 +14,6 @@ interface Note {
   fileName?: string;
   timestamp: string;
 }
-import { X, Upload, File, FileText, Edit3, Save } from 'lucide-react';
-import { useNotes } from '../contexts/NotesContext';
 
 export function NotesManager() {
   const { notes, addNote, deleteNote, updateNote } = useNotes();
@@ -19,7 +22,6 @@ export function NotesManager() {
   const [editNoteId, setEditNoteId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
-  const [fileContent, setFileContent] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,7 +40,6 @@ export function NotesManager() {
       setTitle('');
       setContent('');
       setFile(null);
-      setFileContent('');
     }
   };
 
@@ -49,7 +50,7 @@ export function NotesManager() {
     }
   };
 
-  const startEditing = (note: any) => {
+  const startEditing = (note: Note) => {
     setEditNoteId(note.id);
     setEditTitle(note.title || '');
     setEditContent(note.content);
@@ -61,37 +62,40 @@ export function NotesManager() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-gray-800 text-white p-6">
-      <h2 className="text-2xl font-bold mb-6">Notes Manager</h2>
+    <div className="h-screen flex flex-col bg-black text-white p-6 overflow-hidden">
+      <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent animate-fade-in">
+        Notes Manager
+      </h2>
       
-      <div className="mb-6 bg-gray-700 rounded-lg p-4">
-        <input
+      <div className="mb-6 bg-zinc-900/50 backdrop-blur-sm rounded-lg p-6 border border-zinc-800 animate-slide-in">
+        <Input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Note title..."
-          className="w-full mb-3 p-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mb-3 bg-zinc-800/50 border-zinc-700 focus:border-orange-500 transition-all"
         />
-        <textarea
+        <Textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your note..."
-          className="w-full h-32 p-2 mb-3 bg-gray-600 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full h-32 mb-3 bg-zinc-800/50 border-zinc-700 focus:border-orange-500 transition-all resize-none"
         />
         <div className="flex gap-3">
-          <button
+          <Button
             onClick={addNoteWithFile}
-            className="flex-1 px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+            className="flex-1 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 transition-all duration-300 animate-pulse"
           >
             Add Note
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 rounded-md hover:bg-green-700 transition-colors"
+            variant="secondary"
+            className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700"
           >
             <Upload size={16} />
             Upload File
-          </button>
+          </Button>
           <input
             ref={fileInputRef}
             type="file"
@@ -100,55 +104,59 @@ export function NotesManager() {
           />
         </div>
         {file && (
-          <div className="mt-3 p-2 bg-gray-600 rounded-md">
-            <p className="text-white">{file.name}</p>
+          <div className="mt-3 p-2 bg-zinc-800/50 rounded-md animate-fade-in">
+            <p className="text-zinc-300">{file.name}</p>
           </div>
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-4">
+      <div className="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
         {notes.map((note) => (
           <div
             key={note.id}
-            className="bg-gray-700 rounded-lg p-4 relative group"
+            className="bg-zinc-900/50 backdrop-blur-sm rounded-lg p-4 relative group border border-zinc-800 hover:border-orange-500/50 transition-all duration-300 animate-fade-in"
           >
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => deleteNote(note.id)}
-              className="absolute top-2 right-2 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute top-2 right-2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all duration-300"
             >
               <X size={16} />
-            </button>
+            </Button>
             
             {editNoteId === note.id ? (
-              <>
-                <input
+              <div className="animate-fade-in">
+                <Input
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  className="w-full mb-2 p-2 bg-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="mb-2 bg-zinc-800/50 border-zinc-700 focus:border-orange-500"
                 />
-                <textarea
+                <Textarea
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  className="w-full h-24 p-2 bg-gray-600 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full h-24 bg-zinc-800/50 border-zinc-700 focus:border-orange-500 resize-none"
                 />
-                <button
+                <Button
                   onClick={() => saveEdit(note.id)}
-                  className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full"
+                  className="mt-2 w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600"
                 >
-                  <Save size={16} />
+                  <Save size={16} className="mr-2" />
                   Save
-                </button>
-              </>
+                </Button>
+              </div>
             ) : (
               <>
                 <div className="flex items-center gap-2 mb-2">
                   {note.type === 'file' ? (
-                    <File size={20} className="text-blue-400" />
+                    <File size={20} className="text-orange-400" />
                   ) : (
-                    <FileText size={20} className="text-green-400" />
+                    <FileText size={20} className="text-pink-400" />
                   )}
-                  <h3 className="text-lg font-semibold">{note.title}</h3>
+                  <h3 className="text-lg font-semibold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
+                    {note.title}
+                  </h3>
                 </div>
                 
                 {note.type === 'file' ? (
@@ -156,22 +164,24 @@ export function NotesManager() {
                     <a
                       href={note.fileUrl}
                       download={note.fileName}
-                      className="text-blue-400 hover:text-blue-300 underline"
+                      className="text-orange-400 hover:text-orange-300 underline"
                     >
                       Download {note.fileName}
                     </a>
                   </div>
                 ) : (
-                  <p className="text-gray-300 mb-2">{note.content}</p>
+                  <p className="text-zinc-300 mb-2">{note.content}</p>
                 )}
                 
-                <p className="text-gray-400 text-sm">{note.timestamp}</p>
-                <button
+                <p className="text-zinc-500 text-sm">{note.timestamp}</p>
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => startEditing(note)}
-                  className="absolute bottom-2 right-2 text-gray-400 hover:text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute bottom-2 right-2 text-zinc-400 hover:text-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-300"
                 >
                   <Edit3 size={16} />
-                </button>
+                </Button>
               </>
             )}
           </div>

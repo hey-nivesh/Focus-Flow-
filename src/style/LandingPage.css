@@ -1,0 +1,43 @@
+/* LandingPage.css */
+.landing-container {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1a202c, #2d3748);
+    color: white;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hoverani{
+    transition: transform 0.3s ease;
+}
+.hoverani:hover{
+    transform: scale(1.1);
+}
+.text-5xl {
+    font-size: 3rem;
+    transition: transform 0.3s ease;
+}
+
+.text-5xl:hover {
+    transform: scale(0.9);
+}
+
+img {
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(0.9);
+}
+button{
+    transition: transform 0.3s ease;
+}
+button:hover{
+    transform: scale(0.9);
+}
