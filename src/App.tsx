@@ -13,6 +13,7 @@ import {
   List,
   Menu,
   Home,
+  Volume2
 } from 'lucide-react';
 import TaskManager from './components/TaskManager';
 import FocusTimer from './components/FocusTimer';
@@ -29,12 +30,13 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotesProvider } from './contexts/NotesContext';
 import ChatBot from './components/ChatBot';
 import YouTubeVideoScene from './components/YouTubeVideoScene';
+import WhiteNoise from './components/WhiteNoise';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeView, setActiveView] = useState<'tasks' | 'schedule' | 'analytics' | 'notes'>('tasks');
+  const [activeView, setActiveView] = useState<'tasks' | 'schedule' | 'analytics' | 'notes' | 'sounds'>('tasks');
   const [authModal, setAuthModal] = useState<'login' | 'signup' | null>(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
@@ -123,6 +125,20 @@ function AppContent() {
             }`} />
           </button>
           <button
+            onClick={() => setActiveView('sounds')}
+            className={`p-3 rounded-xl ${
+              activeView === 'sounds'
+                ? 'bg-blue-50 dark:bg-blue-900'
+                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+            }`}
+          >
+            <Volume2 className={`w-6 h-6 ${
+              activeView === 'sounds'
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-gray-600 dark:text-gray-400'
+            }`} />
+          </button>
+          <button
             onClick={() => setActiveView('analytics')}
             className={`p-3 rounded-xl ${
               activeView === 'analytics'
@@ -167,7 +183,6 @@ function AppContent() {
               </div>
               <div className="space-y-8">
                 <FocusTimer />
-                <ChatBot />
               </div>
             </div>
           )}
@@ -175,11 +190,15 @@ function AppContent() {
           {activeView === 'schedule' && <Schedule />}
           {activeView === 'analytics' && <Analytics />}
           {activeView === 'notes' && <NotesManager />}
+          {activeView === 'sounds' && <WhiteNoise />}
         </div>
       </div>
 
       {/* Quick Notes Component */}
       <Notes />
+
+      {/* ChatBot Component */}
+      <ChatBot />
     </div>
   );
 }
@@ -189,10 +208,10 @@ function App() {
     <AuthProvider>
       <TaskProvider>
         <NotesProvider>
-        <Router>
-            <Routes> {/* ✅ Replaced Switch with Routes */}
-              <Route path="/video/:videoId" element={<YouTubeVideoScene />} /> {/* ✅ Use 'element' prop */}
-              <Route path="/" element={<AppContent />} /> {/* ✅ Use 'element' prop */}
+          <Router>
+            <Routes>
+              <Route path="/video/:videoId" element={<YouTubeVideoScene />} />
+              <Route path="/" element={<AppContent />} />
             </Routes>
           </Router>
         </NotesProvider>

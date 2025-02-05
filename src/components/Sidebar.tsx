@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { 
   BarChart3, 
   BookOpen, 
-  Clock, 
   Settings, 
   Target,
   HomeIcon,
-  Home
+  Home,
+  Volume2
 } from 'lucide-react';
 
 interface NavItem {
@@ -15,25 +15,26 @@ interface NavItem {
   href: string;
 }
 
-const navItems: NavItem[] = [
-  { icon: <Target size={24} />, label: 'Daily Focus', href: '#' },
-  { icon: <Home size={24} />, label: 'Home', href: '#' },
-  { icon: <BookOpen size={24} />, label: 'Tasks', href: '#' },
-  { icon: <BarChart3 size={24} />, label: 'Analytics', href: '#' },
-  { icon: <Settings size={24} />, label: 'Settings', href: '#' },
-];
-
-const TRIGGER_AREA = 20; // pixels from the left edge that triggers the sidebar
+const TRIGGER_AREA = 20;
 
 export function Sidebar() {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const navItems: NavItem[] = [
+    { icon: <Target size={24} />, label: 'Daily Focus', href: '#' },
+    { icon: <Home size={24} />, label: 'Home', href: '#' },
+    { icon: <BookOpen size={24} />, label: 'Tasks', href: '#' },
+    { icon: <Volume2 size={24} />, label: 'Focus Sounds', href: '/sounds' },
+    { icon: <BarChart3 size={24} />, label: 'Analytics', href: '#' },
+    { icon: <Settings size={24} />, label: 'Settings', href: '#' },
+  ];
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientX <= TRIGGER_AREA) {
         setIsVisible(true);
-      } else if (e.clientX > 256) { // Full width of expanded sidebar
+      } else if (e.clientX > 256) {
         setIsVisible(false);
         setIsExpanded(false);
       }
