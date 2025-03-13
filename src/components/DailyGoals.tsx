@@ -6,9 +6,9 @@ const DailyGoals: React.FC = () => {
   const { getCategoryCompletion } = useTaskContext();
 
   const categories = [
-    { name: 'Work', bgClass: 'bg-blue-50 dark:bg-blue-900/20', textClass: 'text-blue-600 dark:text-blue-400' },
-    { name: 'Learning', bgClass: 'bg-green-50 dark:bg-green-900/20', textClass: 'text-green-600 dark:text-green-400' },
-    { name: 'Personal Growth', bgClass: 'bg-purple-50 dark:bg-purple-900/20', textClass: 'text-purple-600 dark:text-purple-400' },
+    { name: 'Work', bgClass: 'bg-zinc-900/50', textClass: 'text-orange-500' },
+    { name: 'Learning', bgClass: 'bg-zinc-900/50', textClass: 'text-pink-500' },
+    { name: 'Personal Growth', bgClass: 'bg-zinc-900/50', textClass: 'text-purple-500' },
   ];
 
   const totalCompletion = categories.reduce((acc, category) => {
@@ -24,10 +24,10 @@ const DailyGoals: React.FC = () => {
     : Math.round((totalCompletion.completed / totalCompletion.total) * 100);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
+    <div className="bg-black text-white rounded-xl p-6 shadow-sm border border-zinc-800 animate-fade-in">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Daily Focus</h2>
-        <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+        <h2 className="text-xl font-semibold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">Daily Focus</h2>
+        <div className="flex items-center space-x-2 text-sm text-zinc-400">
           <TrendingUp className="w-4 h-4" />
           <span>{overallPercentage}% completed today</span>
         </div>
@@ -37,15 +37,23 @@ const DailyGoals: React.FC = () => {
         {categories.map(category => {
           const { completed, total, percentage } = getCategoryCompletion(category.name);
           return (
-            <div key={category.name} className={`${category.bgClass} rounded-lg p-4`}>
+            <div key={category.name} className={`${category.bgClass} backdrop-blur-sm rounded-lg p-4 border border-zinc-800 hover:border-orange-500/50 transition-all duration-300`}>
               <div className="flex items-center justify-between mb-2">
                 <Target className={`w-5 h-5 ${category.textClass}`} />
                 <span className={`text-sm font-medium ${category.textClass}`}>
                   {completed}/{total}
                 </span>
               </div>
-              <h3 className="font-medium text-gray-900 dark:text-gray-100">{category.name}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{percentage}% complete</p>
+              <h3 className="font-medium text-white">{category.name}</h3>
+              <p className="text-sm text-zinc-400">{percentage}% complete</p>
+              
+              {/* Progress bar */}
+              <div className="mt-2 h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-orange-500 to-pink-500 transition-all duration-500"
+                  style={{ width: `${percentage}%` }}
+                ></div>
+              </div>
             </div>
           );
         })}

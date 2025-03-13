@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
          LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-import { Calendar, TrendingUp, PieChart as PieChartIcon } from 'lucide-react';
+import { Calendar, TrendingUp, PieChartIcon } from 'lucide-react';
 
 const Analytics: React.FC = () => {
   const [timeframe, setTimeframe] = useState<'week' | 'month'>('week');
@@ -25,33 +25,33 @@ const Analytics: React.FC = () => {
   ];
 
   const categoryData = [
-    { name: 'Work', value: 40, color: '#3B82F6' },
-    { name: 'Learning', value: 30, color: '#10B981' },
-    { name: 'Personal Growth', value: 20, color: '#8B5CF6' },
-    { name: 'Other', value: 10, color: '#6B7280' },
+    { name: 'Work', value: 40, color: '#F97316' }, // orange-500
+    { name: 'Learning', value: 30, color: '#EC4899' }, // pink-500
+    { name: 'Personal Growth', value: 20, color: '#8B5CF6' }, // violet-500
+    { name: 'Other', value: 10, color: '#6B7280' }, // gray-500
   ];
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
+    <div className="bg-black text-white rounded-xl p-6 shadow-sm border border-zinc-800 animate-fade-in">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Productivity Analytics</h2>
+        <h2 className="text-xl font-semibold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">Productivity Analytics</h2>
         <div className="flex space-x-2">
           <button
             onClick={() => setTimeframe('week')}
-            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+            className={`px-4 py-2 rounded-lg transition-all duration-300 ${
               timeframe === 'week'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white'
+                : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700'
             }`}
           >
             Week
           </button>
           <button
             onClick={() => setTimeframe('month')}
-            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+            className={`px-4 py-2 rounded-lg transition-all duration-300 ${
               timeframe === 'month'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white'
+                : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700'
             }`}
           >
             Month
@@ -60,8 +60,8 @@ const Analytics: React.FC = () => {
       </div>
 
       {/* Task Completion Rate */}
-      <div className="mb-8">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+      <div className="mb-8 bg-zinc-900/50 backdrop-blur-sm rounded-lg p-6 border border-zinc-800">
+        <h3 className="text-lg font-medium bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">
           Task Completion Rate
         </h3>
         <div className="h-[300px]">
@@ -70,21 +70,21 @@ const Analytics: React.FC = () => {
               data={timeframe === 'week' ? weeklyData : monthlyData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={timeframe === 'week' ? 'day' : 'week'} />
-              <YAxis />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
+              <XAxis dataKey={timeframe === 'week' ? 'day' : 'week'} stroke="#d4d4d8" />
+              <YAxis stroke="#d4d4d8" />
+              <Tooltip contentStyle={{ backgroundColor: '#27272a', borderColor: '#3f3f46', color: '#ffffff' }} />
               <Legend />
-              <Bar dataKey="completed" fill="#3B82F6" name="Completed Tasks" />
-              <Bar dataKey="total" fill="#93C5FD" name="Total Tasks" />
+              <Bar dataKey="completed" fill="#F97316" name="Completed Tasks" />
+              <Bar dataKey="total" fill="#EC4899" name="Total Tasks" />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Productivity Trend */}
-      <div className="mb-8">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+      <div className="mb-8 bg-zinc-900/50 backdrop-blur-sm rounded-lg p-6 border border-zinc-800">
+        <h3 className="text-lg font-medium bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">
           Productivity Trend
         </h3>
         <div className="h-[300px]">
@@ -93,15 +93,15 @@ const Analytics: React.FC = () => {
               data={timeframe === 'week' ? weeklyData : monthlyData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={timeframe === 'week' ? 'day' : 'week'} />
-              <YAxis />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
+              <XAxis dataKey={timeframe === 'week' ? 'day' : 'week'} stroke="#d4d4d8" />
+              <YAxis stroke="#d4d4d8" />
+              <Tooltip contentStyle={{ backgroundColor: '#27272a', borderColor: '#3f3f46', color: '#ffffff' }} />
               <Legend />
               <Line
                 type="monotone"
                 dataKey="completed"
-                stroke="#3B82F6"
+                stroke="#F97316"
                 name="Completed Tasks"
                 strokeWidth={2}
               />
@@ -111,8 +111,8 @@ const Analytics: React.FC = () => {
       </div>
 
       {/* Category Distribution */}
-      <div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+      <div className="bg-zinc-900/50 backdrop-blur-sm rounded-lg p-6 border border-zinc-800">
+        <h3 className="text-lg font-medium bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">
           Category Distribution
         </h3>
         <div className="h-[300px]">
@@ -133,7 +133,7 @@ const Analytics: React.FC = () => {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip contentStyle={{ backgroundColor: '#27272a', borderColor: '#3f3f46', color: '#ffffff' }} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>

@@ -12,7 +12,7 @@ const ChatBot: React.FC = () => {
       {/* Chat toggle button */}
       <button
         onClick={toggleChat}
-        className="p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        className="p-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full shadow-lg hover:from-orange-600 hover:to-pink-600 transition-all duration-300 animate-pulse"
         title="Toggle ChatBot"
       >
         <svg
@@ -32,14 +32,27 @@ const ChatBot: React.FC = () => {
 
       {/* Chat iframe */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-[400px] h-[600px] bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="fixed bottom-24 right-6 w-[400px] h-[600px] bg-zinc-900/90 backdrop-blur-sm rounded-lg shadow-xl overflow-hidden border border-zinc-800 animate-slide-in">
+          <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-r from-orange-500 to-pink-500 flex items-center justify-between px-4">
+            <span className="text-white font-semibold">Focus-Flow Bot</span>
+            <button 
+              onClick={toggleChat}
+              className="text-white hover:text-gray-200 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
           <iframe
             src="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2025/03/13/07/20250313072235-2VP9W9UQ.json"
             width="100%"
             height="100%"
             frameBorder="0"
-            style={{ border: 'none' }}
+            style={{ border: 'none', marginTop: '8px' }}
             allow="microphone"
+            className="pt-8"
           />
         </div>
       )}

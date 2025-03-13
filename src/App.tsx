@@ -31,10 +31,11 @@ import { NotesProvider } from './contexts/NotesContext';
 import ChatBot from './components/ChatBot';
 import YouTubeVideoScene from './components/YouTubeVideoScene';
 import WhiteNoise from './components/WhiteNoise';
+import './style/animations.css';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'tasks' | 'schedule' | 'analytics' | 'notes' | 'sounds'>('tasks');
   const [authModal, setAuthModal] = useState<'login' | 'signup' | null>(null);
@@ -66,18 +67,18 @@ function AppContent() {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen bg-black text-white`}>
       {/* Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="fixed top-8 left-4 z-50 p-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
+        className="fixed top-8 left-4 z-50 p-2 rounded-lg bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white transition-all duration-300"
       >
         <Menu className="w-6 h-6 text-white" />
       </button>
 
       {/* Sidebar */}
       <div 
-        className={`fixed h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col items-center pt-24 pb-8 space-y-8 transition-all duration-300 ease-in-out w-16 ${
+        className={`fixed h-full bg-zinc-900 border-r border-zinc-800 flex flex-col items-center pt-24 pb-8 space-y-8 transition-all duration-300 ease-in-out w-16 ${
           !isSidebarVisible ? '-translate-x-full' : 'translate-x-0'
         }`}
       >
@@ -86,82 +87,82 @@ function AppContent() {
             onClick={() => setActiveView('tasks')}
             className={`p-3 rounded-xl ${
               activeView === 'tasks'
-                ? 'bg-blue-50 dark:bg-blue-900'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
+                ? 'bg-gradient-to-r from-orange-500/20 to-pink-500/20'
+                : 'hover:bg-zinc-800'
+            } transition-all duration-300`}
           >
             <Home className={`w-6 h-6 ${
               activeView === 'tasks'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400'
+                ? 'text-orange-500'
+                : 'text-zinc-400 hover:text-white'
             }`} />
           </button>
           <button
             onClick={() => setActiveView('schedule')}
             className={`p-3 rounded-xl ${
               activeView === 'schedule'
-                ? 'bg-blue-50 dark:bg-blue-900'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
+                ? 'bg-gradient-to-r from-orange-500/20 to-pink-500/20'
+                : 'hover:bg-zinc-800'
+            } transition-all duration-300`}
           >
             <Timer className={`w-6 h-6 ${
               activeView === 'schedule'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400'
+                ? 'text-orange-500'
+                : 'text-zinc-400 hover:text-white'
             }`} />
           </button>
           <button 
             onClick={() => setActiveView('notes')}
             className={`p-3 rounded-xl ${
               activeView === 'notes'
-                ? 'bg-blue-50 dark:bg-blue-900'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
+                ? 'bg-gradient-to-r from-orange-500/20 to-pink-500/20'
+                : 'hover:bg-zinc-800'
+            } transition-all duration-300`}
           >
             <BookOpen className={`w-6 h-6 ${
               activeView === 'notes'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400'
+                ? 'text-orange-500'
+                : 'text-zinc-400 hover:text-white'
             }`} />
           </button>
           <button
             onClick={() => setActiveView('sounds')}
             className={`p-3 rounded-xl ${
               activeView === 'sounds'
-                ? 'bg-blue-50 dark:bg-blue-900'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
+                ? 'bg-gradient-to-r from-orange-500/20 to-pink-500/20'
+                : 'hover:bg-zinc-800'
+            } transition-all duration-300`}
           >
             <Volume2 className={`w-6 h-6 ${
               activeView === 'sounds'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400'
+                ? 'text-orange-500'
+                : 'text-zinc-400 hover:text-white'
             }`} />
           </button>
           <button
             onClick={() => setActiveView('analytics')}
             className={`p-3 rounded-xl ${
               activeView === 'analytics'
-                ? 'bg-blue-50 dark:bg-blue-900'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-            }`}
+                ? 'bg-gradient-to-r from-orange-500/20 to-pink-500/20'
+                : 'hover:bg-zinc-800'
+            } transition-all duration-300`}
           >
             <BarChart2 className={`w-6 h-6 ${
               activeView === 'analytics'
-                ? 'text-blue-600 dark:text-blue-400'
-                : 'text-gray-600 dark:text-gray-400'
+                ? 'text-orange-500'
+                : 'text-zinc-400 hover:text-white'
             }`} />
           </button>
         </nav>
         <div className="mt-auto">
           <button
             onClick={toggleDarkMode}
-            className="p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="p-3 rounded-xl hover:bg-zinc-800 transition-all duration-300"
           >
             {darkMode ? (
-              <Sun className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <Sun className="w-6 h-6 text-orange-500" />
             ) : (
-              <Moon className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <Moon className="w-6 h-6 text-zinc-400" />
             )}
           </button>
         </div>
@@ -171,7 +172,7 @@ function AppContent() {
       <div className={`transition-all duration-300 ${isSidebarVisible ? 'ml-16' : 'ml-0'} p-8`}>
         <div className="max-w-7xl mx-auto">
           <header className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Keep Focus</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">Keep Focus</h1>
             <SearchBar onSearch={setSearchQuery} isLoggedIn={isAuthenticated} />
           </header>
 

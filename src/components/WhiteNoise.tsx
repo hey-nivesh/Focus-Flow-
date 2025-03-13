@@ -81,17 +81,17 @@ const WhiteNoise: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
+    <div className="min-h-screen bg-black text-white p-8 animate-fade-in">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Focus Sounds</h1>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-8">Focus Sounds</h1>
         
         {/* Volume Control */}
-        <div className="mb-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        <div className="mb-8 bg-zinc-900/50 backdrop-blur-sm p-6 rounded-lg shadow-md border border-zinc-800">
           <div className="flex items-center space-x-4">
             {volume === 0 ? (
-              <VolumeX className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <VolumeX className="w-6 h-6 text-zinc-400" />
             ) : (
-              <Volume2 className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <Volume2 className="w-6 h-6 text-orange-500" />
             )}
             <input
               type="range"
@@ -100,7 +100,7 @@ const WhiteNoise: React.FC = () => {
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+              className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500"
             />
           </div>
         </div>
@@ -111,10 +111,10 @@ const WhiteNoise: React.FC = () => {
             <button
               key={sound.id}
               onClick={() => playSound(sound.id)}
-              className={`p-6 rounded-lg shadow-md transition-all duration-300 ${
+              className={`p-6 rounded-lg shadow-md transition-all duration-300 border ${
                 activeSound === sound.id
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-700'
+                  ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white border-transparent'
+                  : 'bg-zinc-900/50 backdrop-blur-sm text-white border-zinc-800 hover:border-orange-500/50'
               }`}
             >
               <div className="flex flex-col items-center space-y-4">
@@ -131,13 +131,25 @@ const WhiteNoise: React.FC = () => {
         </div>
 
         {/* Tips Section */}
-        <div className="mt-12 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Focus Tips</h2>
-          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-            <li>• Use ambient sounds to mask distracting background noise</li>
-            <li>• Keep the volume at a comfortable, non-intrusive level</li>
-            <li>• Experiment with different sounds to find what works best for you</li>
-            <li>• Take regular breaks to prevent listening fatigue</li>
+        <div className="mt-12 bg-zinc-900/50 backdrop-blur-sm p-6 rounded-lg shadow-md border border-zinc-800">
+          <h2 className="text-xl font-semibold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">Focus Tips</h2>
+          <ul className="space-y-2 text-zinc-300">
+            <li className="flex items-center">
+              <span className="text-orange-500 mr-2">•</span> 
+              Use ambient sounds to mask distracting background noise
+            </li>
+            <li className="flex items-center">
+              <span className="text-pink-500 mr-2">•</span> 
+              Keep the volume at a comfortable, non-intrusive level
+            </li>
+            <li className="flex items-center">
+              <span className="text-orange-500 mr-2">•</span> 
+              Experiment with different sounds to find what works best for you
+            </li>
+            <li className="flex items-center">
+              <span className="text-pink-500 mr-2">•</span> 
+              Take regular breaks to prevent listening fatigue
+            </li>
           </ul>
         </div>
       </div>

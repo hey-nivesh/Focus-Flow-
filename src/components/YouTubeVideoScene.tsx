@@ -86,12 +86,12 @@ const YouTubeVideoScene: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-black text-white animate-fade-in">
       <div className="flex flex-col lg:flex-row max-w-[2000px] mx-auto">
         {/* Main Content */}
         <div className="flex-1">
           {/* Video Player */}
-          <div className="w-full bg-black">
+          <div className="w-full bg-black border-b border-zinc-800">
             <div style={{ height: 'calc(100vh - 200px)', minHeight: '600px' }}>
               <iframe
                 src={`https://www.youtube.com/embed/${videoId}`}
@@ -105,7 +105,7 @@ const YouTubeVideoScene: React.FC = () => {
 
           {/* Video Info and Comments */}
           <div className="px-4 lg:px-6 py-4">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
               Understanding React Hooks and Context API
             </h1>
             
@@ -114,44 +114,46 @@ const YouTubeVideoScene: React.FC = () => {
                 <img
                   src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=48&h=48&fit=crop&crop=faces"
                   alt="Channel Avatar"
-                  className="w-12 h-12 rounded-full"
+                  className="w-12 h-12 rounded-full border-2 border-orange-500"
                 />
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Tech Tutorials</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">1.2M subscribers</p>
+                  <h3 className="font-medium text-white">Tech Tutorials</h3>
+                  <p className="text-sm text-zinc-400">1.2M subscribers</p>
                 </div>
-                <button className="px-6 py-2 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition-colors">
+                <button className="px-6 py-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-medium rounded-full hover:from-orange-600 hover:to-pink-600 transition-all duration-300">
                   Subscribe
                 </button>
               </div>
 
               <div className="flex items-center space-x-2 sm:space-x-4">
-                <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full">
+                <div className="flex items-center bg-zinc-900/50 backdrop-blur-sm rounded-full border border-zinc-800">
                   <button
                     onClick={() => setIsLiked(!isLiked)}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-l-full ${
-                      isLiked ? 'text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
-                    } hover:bg-gray-200 dark:hover:bg-gray-700`}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-l-full transition-all duration-300 ${
+                      isLiked ? 'text-orange-500' : 'text-zinc-400 hover:text-white'
+                    }`}
                   >
                     <ThumbsUp className="w-5 h-5" />
                     <span>23K</span>
                   </button>
-                  <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
-                  <button className="flex items-center space-x-2 px-4 py-2 rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                  <div className="w-px h-6 bg-zinc-800"></div>
+                  <button className="flex items-center space-x-2 px-4 py-2 rounded-r-full text-zinc-400 hover:text-white transition-all duration-300">
                     <ThumbsDown className="w-5 h-5" />
                   </button>
                 </div>
 
-                <button className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <button className="flex items-center space-x-2 px-4 py-2 bg-zinc-900/50 backdrop-blur-sm rounded-full text-zinc-400 hover:text-white border border-zinc-800 transition-all duration-300">
                   <Share2 className="w-5 h-5" />
                   <span className="hidden sm:inline">Share</span>
                 </button>
 
                 <button
                   onClick={() => setIsSaved(!isSaved)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
-                    isSaved ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-                  } hover:bg-gray-200 dark:hover:bg-gray-700`}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-300 ${
+                    isSaved 
+                      ? 'bg-gradient-to-r from-orange-500/20 to-pink-500/20 text-orange-500 border-orange-500/50' 
+                      : 'bg-zinc-900/50 text-zinc-400 border-zinc-800 hover:text-white'
+                  }`}
                 >
                   <BookmarkPlus className="w-5 h-5" />
                   <span className="hidden sm:inline">{isSaved ? 'Saved' : 'Save'}</span>
@@ -160,13 +162,13 @@ const YouTubeVideoScene: React.FC = () => {
             </div>
 
             {/* Video Description */}
-            <div className="mt-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+            <div className="mt-6 p-4 bg-zinc-900/50 backdrop-blur-sm rounded-lg border border-zinc-800">
+              <div className="flex items-center text-sm text-zinc-400 mb-2">
                 <span>52,463 views</span>
                 <span className="mx-2">•</span>
                 <span>Premiered Mar 15, 2024</span>
               </div>
-              <p className="text-gray-700 dark:text-gray-300">
+              <p className="text-zinc-300">
                 In this comprehensive tutorial, we dive deep into React Hooks and the Context API. 
                 Learn how to manage state effectively and create maintainable React applications.
                 #ReactJS #WebDevelopment #Programming
@@ -175,7 +177,7 @@ const YouTubeVideoScene: React.FC = () => {
 
             {/* Comments Section */}
             <div className="mt-8">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-6">
                 Comments • {comments.length}
               </h2>
 
@@ -184,7 +186,7 @@ const YouTubeVideoScene: React.FC = () => {
                 <img
                   src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=48&h=48&fit=crop&crop=faces"
                   alt="Your Avatar"
-                  className="w-10 h-10 rounded-full"
+                  className="w-10 h-10 rounded-full border-2 border-orange-500"
                 />
                 <div className="flex-1">
                   <input
@@ -192,20 +194,20 @@ const YouTubeVideoScene: React.FC = () => {
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Add a comment..."
-                    className="w-full px-4 py-2 bg-transparent border-b border-gray-300 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 outline-none text-gray-900 dark:text-white"
+                    className="w-full px-4 py-2 bg-zinc-900/50 backdrop-blur-sm border-b border-zinc-700 focus:border-orange-500 outline-none text-white placeholder-zinc-500 transition-all duration-300"
                   />
                   <div className="flex justify-end mt-2 space-x-2">
                     <button
                       type="button"
                       onClick={() => setCommentText('')}
-                      className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+                      className="px-4 py-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-full transition-all duration-300"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={!commentText.trim()}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full hover:from-orange-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                     >
                       Comment
                     </button>
@@ -216,27 +218,27 @@ const YouTubeVideoScene: React.FC = () => {
               {/* Comments List */}
               <div className="space-y-6">
                 {comments.map((comment) => (
-                  <div key={comment.id} className="flex space-x-4">
+                  <div key={comment.id} className="flex space-x-4 group">
                     <img
                       src={comment.avatar}
                       alt={`${comment.author}'s avatar`}
-                      className="w-10 h-10 rounded-full"
+                      className="w-10 h-10 rounded-full border-2 border-orange-500"
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
-                        <h4 className="font-medium text-gray-900 dark:text-white">{comment.author}</h4>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">{comment.timestamp}</span>
+                        <h4 className="font-medium text-white">{comment.author}</h4>
+                        <span className="text-sm text-zinc-500">{comment.timestamp}</span>
                       </div>
-                      <p className="mt-1 text-gray-700 dark:text-gray-300">{comment.content}</p>
+                      <p className="mt-1 text-zinc-300">{comment.content}</p>
                       <div className="flex items-center space-x-4 mt-2">
-                        <button className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                        <button className="flex items-center space-x-2 text-zinc-400 hover:text-orange-500 transition-colors">
                           <ThumbsUp className="w-4 h-4" />
                           <span className="text-sm">{comment.likes}</span>
                         </button>
-                        <button className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                        <button className="flex items-center space-x-2 text-zinc-400 hover:text-orange-500 transition-colors">
                           <ThumbsDown className="w-4 h-4" />
                         </button>
-                        <button className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                        <button className="text-sm text-zinc-400 hover:text-orange-500 transition-colors">
                           Reply
                         </button>
                       </div>
@@ -249,24 +251,24 @@ const YouTubeVideoScene: React.FC = () => {
         </div>
 
         {/* Recommended Videos Sidebar */}
-        <div className="lg:w-[400px] p-4 lg:p-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recommended</h2>
+        <div className="lg:w-[400px] p-4 lg:p-6 border-l border-zinc-800">
+          <h2 className="text-lg font-semibold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent mb-4">Recommended</h2>
           <div className="space-y-4">
             {recommendedVideos.map((video) => (
-              <div key={video.id} className="flex space-x-2 cursor-pointer group">
-                <div className="flex-shrink-0 relative w-40 h-24">
+              <div key={video.id} className="flex space-x-2 cursor-pointer group hover:bg-zinc-900/50 rounded-lg p-2 transition-all duration-300">
+                <div className="flex-shrink-0 relative w-40 h-24 overflow-hidden rounded-lg border border-zinc-800 group-hover:border-orange-500/50">
                   <img
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  <h3 className="text-sm font-medium text-white line-clamp-2 group-hover:text-orange-500 transition-colors">
                     {video.title}
                   </h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{video.channel}</p>
-                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <p className="text-xs text-zinc-400 mt-1">{video.channel}</p>
+                  <div className="flex items-center text-xs text-zinc-500 mt-1">
                     <span>{video.views}</span>
                     <span className="mx-1">•</span>
                     <span>{video.timestamp}</span>
