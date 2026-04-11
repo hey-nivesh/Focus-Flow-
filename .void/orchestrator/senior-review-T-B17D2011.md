@@ -21,7 +21,7 @@ computing gzip size...
 [2mdist/[22m[32massets/logo-CsCBhCgj.jpg   [39m[1m[2m 82.65 kB[22m[1m[22m
 [2mdist/[22m[35massets/index-CmlDPEhW.css  [39m[1m[2m 24.99 kB[22m[1m[22m[2m │ gzip:   5.26 kB[22m
 [2mdist/[22m[36massets/index-BMAS1UKu.js   [39m[1m[33m721.61 kB[39m[22m[2m │ gzip: 209.26 kB[22m
-[32m✓ built in 8.45s[39m
+[32m✓ built in 5.50s[39m
 Browserslist: caniuse-lite is outdated. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
