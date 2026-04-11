@@ -1,0 +1,13 @@
+{
+  "branch_name": "void-fix/T-99A39282-1775936347515",
+  "ticket_id": "T-99A39282",
+  "summary": "Example: user-facing UI or app behavior in Focus Flow.\n\nVerification did not pass; last output:\nnpm error code ENOENT\nnpm error syscall open\nnpm error path E:\\VOID\\V.O.I.D\\Focus-Flow-\\package.json\nnpm error errno -4058\nnpm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open 'E:\\VOID\\V.O.I.D\\Focus-Flow-\\package.json'\nnpm error enoent This is related to npm not being able to find a file.\nnpm error enoent\nnpm error A complete log of this run can be found in: C:\\Users\\Dell\\AppData\\Local\\npm-cache\\_logs\\2026-04-11T19_39_08_557Z-debug-0.log\n",
+  "test_status": false,
+  "files_modified": [
+    "VOID_FIXER_AUDIT.md"
+  ],
+  "created_at": "2026-04-11T19:39:08.905Z",
+  "verification_command": "npm run build",
+  "attempts_used": 3,
+  "manifest_path": "E:\\VOID\\V.O.I.D\\Focus-Flow-\\fix_manifest.json"
+}
