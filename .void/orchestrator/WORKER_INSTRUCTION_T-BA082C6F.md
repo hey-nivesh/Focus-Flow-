@@ -1,6 +1,9 @@
 You are acting as a Fixing Worker.
 Repository (local): E:\VOID\V.O.I.D\Focus-Flow- (folder: Focus-Flow-)
 
+**Application package root:** E:\VOID\V.O.I.D\Focus-Flow-\Focus-Flow-
+(Git repo root may have no package.json — implement and run builds/tests from the folder above.)
+
 
 Ticket ID: T-BA082C6F
 Title: Auto-Generated Test Ticket
